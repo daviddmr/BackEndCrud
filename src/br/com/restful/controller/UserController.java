@@ -53,7 +53,7 @@ public class UserController {
 		return UserDAO.getInstance().deleteUser(id); 
 	}
 	
-	public List<Integer> deleteMultipleUsers(List<Integer> ids){
-		return UserDAO.getInstance().deleteMultipleUsers(ids);
+	public List<Integer> deleteMultipleUsers(List<Integer> idsToDelete){
+		return UserDAO.getInstance().deleteMultipleUsers(idsToDelete);
 	}
 }
