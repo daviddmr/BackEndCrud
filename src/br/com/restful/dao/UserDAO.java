@@ -10,7 +10,8 @@ import java.util.List;
 import javax.ws.rs.core.Response;
 
 import br.com.restful.factory.ConnectionFactory;
-import br.com.restful.model.User;;
+import br.com.restful.model.User;
+import br.com.restful.model.Users;;
 
 public class UserDAO extends ConnectionFactory{
 
@@ -159,27 +160,30 @@ public class UserDAO extends ConnectionFactory{
 		return id;
 	}
 	
-	public List<Integer> deleteMultipleUsers(List<Integer> ids) {
+	public List<Integer> deleteMultipleUsers(List<Integer> usersList) {
 		
 		Connection conexao = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		conexao = criarConexao();
 		
-		try {
-			pstmt = conexao.prepareStatement(
-					"DELETE FROM users WHERE id in (?);"
-					);
-			pstmt.setArray(1, (Array) ids);
-			pstmt.execute();
+		try{
+			final Integer[] data = usersList.toArray(new Integer[usersList.size()]);
+			final java.sql.Array sqlArray = conexao.createArrayOf("int4", data);
 			
-		} catch (Exception e) {
-			System.out.println("Erro ao apagar os usuarios: " + e);
-			e.printStackTrace();
+			pstmt = conexao.prepareStatement(
+					"DELETE FROM users WHERE id in CAST(? AS INT);"
+					);
+			
+			pstmt.setArray(1, sqlArray);
+			pstmt.execute();
+
+		}catch(Exception e){
+			System.out.println("Erro ao apagar os usuarios: "+e);
 		} finally {
 			fecharConexao(conexao, pstmt, rs);
 		}
-		return ids;
+		return usersList;
 	}
 	
 	public User selectOne(int id){

@@ -4,6 +4,7 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,8 +14,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
+
 import br.com.restful.controller.UserController;
 import br.com.restful.model.User;
+import br.com.restful.model.Users;
 
 @Path("/user")
 public class UserResource {
@@ -110,14 +115,27 @@ public class UserResource {
 	
 	@POST
 	@Path("/deleteUsers")
-	@Produces("application/json")
-	public void deleteUserMultipleUsers(
-			@QueryParam("ids") List<Integer> ids
-		){
+	@Consumes("application/json")
+	public void deleteUserMultipleUsers(String usersJson){
 		
-		System.out.println("id = "+ids.size());
+		if(usersJson != null){
+			System.out.println("teste = " + usersJson);
+			try{
+				Users users = new Gson().fromJson(usersJson, Users.class);
+				List<Integer> idsToDelete = new ArrayList<Integer>(); 
+				for(User u: users.getListUsers()){
+					System.out.println("Id = "+u.getId());
+					idsToDelete.add(u.getId());
+				}
+				new UserController().deleteMultipleUsers(idsToDelete);
+			}catch(Exception e){
+				System.out.println("Erro: "+e);
+			}
+			
+		}else{
+			System.out.println("Json parameter is empty");
+		}
 
 //		return new UserController().deleteMultipleUsers(ids);
 	}
-	
 }
