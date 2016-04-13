@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.ws.rs.core.Response;
 
 import br.com.restful.factory.ConnectionFactory;
@@ -17,8 +20,13 @@ public class UserDAO extends ConnectionFactory{
 
 	private static UserDAO instance;
 	
+	static EntityManagerFactory emf;
+	static EntityManager em;
+	
 	public static UserDAO getInstance(){
 		if(instance == null)
+//			emf = Persistence.createEntityManagerFactory("maindatabase");
+//			em = emf.createEntityManager();
 			instance = new UserDAO();
 		return instance;
 	}
@@ -77,6 +85,21 @@ public class UserDAO extends ConnectionFactory{
 			fecharConexao(conexao, pstmt, rs);
 		}
 		return user;
+	}
+	
+	public void insert(User user) {
+		try{
+			emf = Persistence.createEntityManagerFactory("maindatabase");
+			em = emf.createEntityManager();
+			em.getTransaction().begin();
+			em.merge(user);
+			em.getTransaction().commit();
+		}catch (Exception e) {
+			System.out.println("Erro ao adicionar o usuario: " + e);
+			e.printStackTrace();
+		}	finally {
+			emf.close();
+		}
 	}
 	
 	public User updateUser(int id, String firstName, String lastName, String birthDay, String address,
@@ -172,7 +195,7 @@ public class UserDAO extends ConnectionFactory{
 			final java.sql.Array sqlArray = conexao.createArrayOf("int4", data);
 			
 			pstmt = conexao.prepareStatement(
-					"DELETE FROM users WHERE id in CAST(? AS INT);"
+					"DELETE FROM users WHERE id in ?;"
 					);
 			
 			pstmt.setArray(1, sqlArray);

@@ -39,41 +39,63 @@ public class UserResource {
 		return new UserController().selectOne(id);
 	}
 	
+//	@POST
+//	@Path("/add")
+//	@Produces("application/json")
+//	public User addUser(
+//		@FormParam("first_name") String firstName,
+//		@FormParam("last_name") String lastName,
+//		@FormParam("birthday") String birthDay,
+//		@FormParam("address") String address,
+//		@FormParam("address_complement") String addressComplement,
+//		@FormParam("district") String district,
+//		@FormParam("telephone") String telephone,
+//		@FormParam("mobile_phone") String mobilePhone,
+//		@FormParam("rg") String rg,
+//		@FormParam("cpf") String cpf,
+//		@FormParam("state") String state,
+//		@FormParam("city") String city,
+//		@FormParam("postcode") String postcode
+//		) {
+//
+//		return new UserController().addUser(
+//										firstName,
+//										lastName,
+//										birthDay,
+//										address,
+//										addressComplement,
+//										district,
+//										telephone,
+//										mobilePhone,
+//										rg,
+//										cpf,
+//										state,
+//										city,
+//										postcode
+//									);
+//		
+//		/*return Response.status(200)
+//			.entity("{status: 200, message: 'addUser is called'}")
+////			.entity("addUser is called, Name : " + ", Lastname : ")
+//			.build();*/
+//
+//	}
+	
 	@POST
 	@Path("/add")
-	@Produces("application/json")
-	public User addUser(
-		@FormParam("first_name") String firstName,
-		@FormParam("last_name") String lastName,
-		@FormParam("birthday") String birthDay,
-		@FormParam("address") String address,
-		@FormParam("address_complement") String addressComplement,
-		@FormParam("district") String district,
-		@FormParam("telephone") String telephone,
-		@FormParam("mobile_phone") String mobilePhone,
-		@FormParam("rg") String rg,
-		@FormParam("cpf") String cpf,
-		@FormParam("state") String state,
-		@FormParam("city") String city,
-		@FormParam("postcode") String postcode
-		) {
-
-		return new UserController().addUser(
-										firstName,
-										lastName,
-										birthDay,
-										address,
-										addressComplement,
-										district,
-										telephone,
-										mobilePhone,
-										rg,
-										cpf,
-										state,
-										city,
-										postcode
-									);
-		
+//	@Produces("application/json")
+	@Consumes("application/json")
+	public void addUser(String userJson) {
+		if(userJson != null){
+			try{
+				User user = new Gson().fromJson(userJson, User.class);
+				new UserController().addUser(user);
+			}catch(Exception e){
+				System.out.println("Erro: "+e);
+			}
+		}else{
+			System.out.println("Json parameter is empty");
+		}
 		/*return Response.status(200)
 			.entity("{status: 200, message: 'addUser is called'}")
 //			.entity("addUser is called, Name : " + ", Lastname : ")

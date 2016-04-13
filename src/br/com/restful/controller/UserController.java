@@ -21,25 +21,9 @@ public class UserController {
 		return UserDAO.getInstance().selectOne(id);
 	}
 	
-	public User addUser(String firstName, String lastName, String birthDay, String address,
-			String addressComplement, String district, String telephone, String mobilePhone, String rg, String cpf,
-			String state, String city, String postcode) {
+	public void addUser(User user) {
 		System.out.println("Add user");
-		return UserDAO.getInstance().insert(
-				firstName,
-				lastName,
-				birthDay,
-				address,
-				addressComplement,
-				district,
-				telephone,
-				mobilePhone,
-				rg,
-				cpf,
-				state,
-				city,
-				postcode
-				);
+		UserDAO.getInstance().insert(user);
 	}	
 	
 	public User updateUser(int id, String firstName, String lastName, String birthDay, String address,

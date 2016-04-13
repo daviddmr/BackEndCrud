@@ -1,22 +1,47 @@
 package br.com.restful.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.gson.annotations.SerializedName;
+
 @XmlRootElement
+@Entity
+@Table(name = "user")
 public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@Column
 	private String firstName;
+	@Column
 	private String lastName;
+	@Column
 	private String birthday;
+	@Column
 	private String address;
+	@Column
 	private String addressComplement;
+	@Column
 	private String district;
+	@Column
 	private String telephone;
+	@Column
 	private String mobilePhone;
+	@Column
 	private String rg;
+	@Column
 	private String cpf;
+	@Column
 	private String state;
+	@Column
 	private String city;
+	@Column
 	private String postcode;
 	
 	public Integer getId() {
