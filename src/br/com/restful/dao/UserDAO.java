@@ -87,68 +87,85 @@ public class UserDAO extends ConnectionFactory{
 		return user;
 	}
 	
-	public void insert(User user) {
-		try{
-			emf = Persistence.createEntityManagerFactory("maindatabase");
-			em = emf.createEntityManager();
-			em.getTransaction().begin();
-			em.merge(user);
-			em.getTransaction().commit();
-		}catch (Exception e) {
+	public User insert(User user) {
+//		try{
+//			emf = Persistence.createEntityManagerFactory("maindatabase");
+//			em = emf.createEntityManager();
+//			em.getTransaction().begin();
+//			em.merge(user);
+//			em.getTransaction().commit();
+//		}catch (Exception e) {
+//			System.out.println("Erro ao adicionar o usuario: " + e);
+//			e.printStackTrace();
+//		}	finally {
+//			emf.close();
+//		}
+//		return user;
+		
+		Connection conexao = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;		
+		conexao = criarConexao();
+		
+		try {
+			pstmt = conexao.prepareStatement(
+					"insert into users(first_name, last_name, birthday,  address, address_complement, district, "
+					+ "telephone, mobile_phone, rg, cpf, state, city, postcode) values(?, ?, ?, ?, ?, ?, ?, ?, "
+					+ "?, ?, ?, ?, ?);"
+					);
+			
+			pstmt.setString(1,user.getFirstName());
+			pstmt.setString(2,user.getLastName());
+			pstmt.setString(3,user.getBirthday());
+			pstmt.setString(4,user.getAddress());
+			pstmt.setString(5,user.getAddressComplement());
+			pstmt.setString(6,user.getDistrict());
+			pstmt.setString(7,user.getTelephone());
+			pstmt.setString(8,user.getMobilePhone());
+			pstmt.setString(9,user.getRg());
+			pstmt.setString(10,user.getCpf());
+			pstmt.setString(11,user.getState());
+			pstmt.setString(12,user.getCity());
+			pstmt.setString(13,user.getPostcode());
+			pstmt.execute();
+			
+		} catch (Exception e) {
 			System.out.println("Erro ao adicionar o usuario: " + e);
 			e.printStackTrace();
-		}	finally {
-			emf.close();
+		} finally {
+			fecharConexao(conexao, pstmt, rs);
 		}
+		return user;
 	}
 	
-	public User updateUser(int id, String firstName, String lastName, String birthDay, String address,
-			String addressComplement, String district, String telephone, String mobilePhone, String rg, String cpf,
-			String state, String city, String postcode){
+	public User updateUser(User user){
 		
 		Connection conexao = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
 		conexao = criarConexao();
-		User user = new User();
-
+		
 		try {
 			pstmt = conexao.prepareStatement(
 					"update users set first_name=?, last_name=?, birthday=?,  address=?, address_complement=?, "
 					+ "district=?, telephone=?, mobile_phone=?, rg=?, cpf=?, state=?, city=?, postcode=? "
 					+ "WHERE id = ?;"
 					);
-		
-			user.setId(id);
-			user.setFirstName(firstName);
-			user.setLastName(lastName);
-			user.setBirthday(birthDay);
-			user.setAddress(address);
-			user.setAddressComplement(addressComplement);
-			user.setDistrict(district);
-			user.setTelephone(telephone);
-			user.setMobilePhone(mobilePhone);
-			user.setRg(rg);
-			user.setCpf(cpf);
-			user.setState(state);
-			user.setCity(city);
-			user.setPostcode(postcode);
 			
-			pstmt.setString(1,firstName);
-			pstmt.setString(2,lastName);
-			pstmt.setString(3,birthDay);
-			pstmt.setString(4,address);
-			pstmt.setString(5,addressComplement);
-			pstmt.setString(6,district);
-			pstmt.setString(7,telephone);
-			pstmt.setString(8,mobilePhone);
-			pstmt.setString(9,rg);
-			pstmt.setString(10,cpf);
-			pstmt.setString(11,state);
-			pstmt.setString(12,city);
-			pstmt.setString(13,postcode);
-            pstmt.setInt(14,id);
+			pstmt.setString(1,user.getFirstName());
+			pstmt.setString(2,user.getLastName());
+			pstmt.setString(3,user.getBirthday());
+			pstmt.setString(4,user.getAddress());
+			pstmt.setString(5,user.getAddressComplement());
+			pstmt.setString(6,user.getDistrict());
+			pstmt.setString(7,user.getTelephone());
+			pstmt.setString(8,user.getMobilePhone());
+			pstmt.setString(9,user.getRg());
+			pstmt.setString(10,user.getCpf());
+			pstmt.setString(11,user.getState());
+			pstmt.setString(12,user.getCity());
+			pstmt.setString(13,user.getPostcode());
+			pstmt.setInt(14,user.getId());
             pstmt.execute();
 			
 		} catch (Exception e) {
@@ -160,7 +177,7 @@ public class UserDAO extends ConnectionFactory{
 		return user;	
 	}
 	
-	public int deleteUser(int id) {
+	public User deleteUser(User user) {
 		
 		Connection conexao = null;
 		PreparedStatement pstmt = null;
@@ -171,7 +188,7 @@ public class UserDAO extends ConnectionFactory{
 			pstmt = conexao.prepareStatement(
 					"DELETE FROM users WHERE id=?;"
 					);
-			pstmt.setInt(1,id);
+			pstmt.setInt(1,user.getId());
 			pstmt.execute();
 			
 		} catch (Exception e) {
@@ -180,7 +197,7 @@ public class UserDAO extends ConnectionFactory{
 		} finally {
 			fecharConexao(conexao, pstmt, rs);
 		}
-		return id;
+		return user;
 	}
 	
 	public List<Integer> deleteMultipleUsers(List<Integer> usersList) {

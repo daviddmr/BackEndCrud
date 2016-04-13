@@ -39,125 +39,100 @@ public class UserResource {
 		return new UserController().selectOne(id);
 	}
 	
-//	@POST
-//	@Path("/add")
-//	@Produces("application/json")
-//	public User addUser(
-//		@FormParam("first_name") String firstName,
-//		@FormParam("last_name") String lastName,
-//		@FormParam("birthday") String birthDay,
-//		@FormParam("address") String address,
-//		@FormParam("address_complement") String addressComplement,
-//		@FormParam("district") String district,
-//		@FormParam("telephone") String telephone,
-//		@FormParam("mobile_phone") String mobilePhone,
-//		@FormParam("rg") String rg,
-//		@FormParam("cpf") String cpf,
-//		@FormParam("state") String state,
-//		@FormParam("city") String city,
-//		@FormParam("postcode") String postcode
-//		) {
-//
-//		return new UserController().addUser(
-//										firstName,
-//										lastName,
-//										birthDay,
-//										address,
-//										addressComplement,
-//										district,
-//										telephone,
-//										mobilePhone,
-//										rg,
-//										cpf,
-//										state,
-//										city,
-//										postcode
-//									);
-//		
-//		/*return Response.status(200)
-//			.entity("{status: 200, message: 'addUser is called'}")
-////			.entity("addUser is called, Name : " + ", Lastname : ")
-//			.build();*/
-//
-//	}
-	
 	@POST
 	@Path("/add")
-//	@Produces("application/json")
+	@Produces("application/json")
 	@Consumes("application/json")
-	public void addUser(String userJson) {
+	public Response addUser(String userJson) {
+		User user = null;
+		User userResponse = null;
 		if(userJson != null){
 			try{
-				User user = new Gson().fromJson(userJson, User.class);
-				new UserController().addUser(user);
+				user = new Gson().fromJson(userJson, User.class);
+				userResponse = new UserController().addUser(user);
 			}catch(Exception e){
 				System.out.println("Erro: "+e);
 			}
 		}else{
 			System.out.println("Json parameter is empty");
 		}
-		/*return Response.status(200)
-			.entity("{status: 200, message: 'addUser is called'}")
-//			.entity("addUser is called, Name : " + ", Lastname : ")
-			.build();*/
-
+		return Response.status(200)
+			.entity("{\"status\": 200, \"message\":\""+userResponse.getFirstName()+ " adicionado com sucesso\"}")
+			.build();
 	}
 	
 	@POST
 	@Path("/update")
 	@Produces("application/json")
-	public User updateUser(
-			@FormParam("id") int id,
-			@FormParam("first_name") String firstName,
-			@FormParam("last_name") String lastName,
-			@FormParam("birthday") String birthDay,
-			@FormParam("address") String address,
-			@FormParam("address_complement") String addressComplement,
-			@FormParam("district") String district,
-			@FormParam("telephone") String telephone,
-			@FormParam("mobile_phone") String mobilePhone,
-			@FormParam("rg") String rg,
-			@FormParam("cpf") String cpf,
-			@FormParam("state") String state,
-			@FormParam("city") String city,
-			@FormParam("postcode") String postcode
-			) {
+	@Consumes("application/json")
+	public Response updateUser(String userJson) {
 		
-		System.out.println("Id = "+id);
-		
-		return new UserController().updateUser(id, firstName, lastName, birthDay, address, addressComplement, district, telephone, mobilePhone, rg, cpf, state, city, postcode);
+		User user = null;
+		User userResponse = null;
+		if(userJson != null){
+			try{
+				user = new Gson().fromJson(userJson, User.class);
+				userResponse = new UserController().updateUser(user);
+			}catch(Exception e){
+				System.out.println("Erro: "+e);
+			}
+		}else{
+			System.out.println("Json parameter is empty");
+		}
+		return Response.status(200)
+			.entity("{\"status\": 200, \"message\":\""+userResponse.getFirstName()+ " alterado com sucesso\"}")
+			.build();
 	}
 	
 	@POST
 	@Path("/delete")
-	public int deleteUser(@FormParam("id") int id){
-		System.out.println("Id para apagar = "+id);
-		return new UserController().deleteUser(id);
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response deleteUser(String userJson){
+		User user = null;
+		User userResponse = null;
+		if(userJson != null){
+			try{
+				user = new Gson().fromJson(userJson, User.class);
+				userResponse = new UserController().deleteUser(user);
+			}catch(Exception e){
+				System.out.println("Erro: "+e);
+			}
+		}else{
+			System.out.println("Json parameter is empty");
+		}
+		
+		return Response.status(200)
+				.entity("{\"status\": 200, \"message\":\""+userResponse.getFirstName()+ " apagado com sucesso\"}")
+				.build();
 	}
 	
 	@POST
 	@Path("/deleteUsers")
+	@Produces("application/json")
 	@Consumes("application/json")
-	public void deleteUserMultipleUsers(String usersJson){
+	public Response deleteUserMultipleUsers(String usersJson){
 		
 		if(usersJson != null){
 			System.out.println("teste = " + usersJson);
 			try{
 				Users users = new Gson().fromJson(usersJson, Users.class);
-				List<Integer> idsToDelete = new ArrayList<Integer>(); 
+				List<Integer> userToDelete = new ArrayList<Integer>(); 
 				for(User u: users.getListUsers()){
 					System.out.println("Id = "+u.getId());
-					idsToDelete.add(u.getId());
+					userToDelete.add(u.getId());
 				}
-				new UserController().deleteMultipleUsers(idsToDelete);
+				new UserController().deleteMultipleUsers(userToDelete);
 			}catch(Exception e){
 				System.out.println("Erro: "+e);
 			}
-			
 		}else{
 			System.out.println("Json parameter is empty");
 		}
 
-//		return new UserController().deleteMultipleUsers(ids);
+		return Response.status(200)
+//				.entity("{\"status\": 200, \"message\":\""+userResponse.getFirstName()+ " apagado com sucesso\"}")
+				.entity("{\"status\": 200, \"message\":\""+" apagado com sucesso\"}")
+				.build();
 	}
 }

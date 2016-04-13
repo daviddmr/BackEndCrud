@@ -21,23 +21,21 @@ public class UserController {
 		return UserDAO.getInstance().selectOne(id);
 	}
 	
-	public void addUser(User user) {
+	public User addUser(User user) {
 		System.out.println("Add user");
-		UserDAO.getInstance().insert(user);
+		return UserDAO.getInstance().insert(user);
 	}	
 	
-	public User updateUser(int id, String firstName, String lastName, String birthDay, String address,
-			String addressComplement, String district, String telephone, String mobilePhone, String rg, String cpf,
-			String state, String city, String postcode){
+	public User updateUser(User user){
 		System.out.println("Update user");
-		return UserDAO.getInstance().updateUser(id, firstName, lastName, birthDay, address, addressComplement, district, telephone, mobilePhone, rg, cpf, state, city, postcode); 
+		return UserDAO.getInstance().updateUser(user); 
 	}
 	
-	public int deleteUser(int id){
-		return UserDAO.getInstance().deleteUser(id); 
+	public User deleteUser(User user){
+		return UserDAO.getInstance().deleteUser(user); 
 	}
 	
-	public List<Integer> deleteMultipleUsers(List<Integer> idsToDelete){
-		return UserDAO.getInstance().deleteMultipleUsers(idsToDelete);
+	public List<Integer> deleteMultipleUsers(List<Integer> userToDelete){
+		return UserDAO.getInstance().deleteMultipleUsers(userToDelete);
 	}
 }
