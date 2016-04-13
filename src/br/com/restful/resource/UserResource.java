@@ -1,5 +1,6 @@
 package br.com.restful.resource;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
@@ -16,6 +18,7 @@ import br.com.restful.model.User;
 
 @Path("/user")
 public class UserResource {
+	
 	@GET
 	@Path("/listarTodos")
 	@Produces("application/json")
@@ -74,13 +77,6 @@ public class UserResource {
 	}
 	
 	@POST
-	@Path("/delete")
-	public int deleteUser(@FormParam("id") int id){
-		System.out.println("Id para apagar = "+id);
-		return new UserController().deleteUser(id);
-	}
-	
-	@POST
 	@Path("/update")
 	@Produces("application/json")
 	public User updateUser(
@@ -104,4 +100,24 @@ public class UserResource {
 		
 		return new UserController().updateUser(id, firstName, lastName, birthDay, address, addressComplement, district, telephone, mobilePhone, rg, cpf, state, city, postcode);
 	}
+	
+	@POST
+	@Path("/delete")
+	public int deleteUser(@FormParam("id") int id){
+		System.out.println("Id para apagar = "+id);
+		return new UserController().deleteUser(id);
+	}
+	
+	@POST
+	@Path("/deleteUsers")
+	@Produces("application/json")
+	public void deleteUserMultipleUsers(
+			@QueryParam("ids") List<Integer> ids
+		){
+		
+		System.out.println("id = "+ids.size());
+
+//		return new UserController().deleteMultipleUsers(ids);
+	}
+	
 }

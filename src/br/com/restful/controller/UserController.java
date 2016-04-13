@@ -1,6 +1,8 @@
 package br.com.restful.controller;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.sql.Array;
 
 import javax.ws.rs.core.Response;
 
@@ -38,16 +40,20 @@ public class UserController {
 				city,
 				postcode
 				);
-	}
-	
-	public int deleteUser(int id){
-		return UserDAO.getInstance().deleteUser(id); 
-	}
+	}	
 	
 	public User updateUser(int id, String firstName, String lastName, String birthDay, String address,
 			String addressComplement, String district, String telephone, String mobilePhone, String rg, String cpf,
 			String state, String city, String postcode){
 		System.out.println("Update user");
 		return UserDAO.getInstance().updateUser(id, firstName, lastName, birthDay, address, addressComplement, district, telephone, mobilePhone, rg, cpf, state, city, postcode); 
+	}
+	
+	public int deleteUser(int id){
+		return UserDAO.getInstance().deleteUser(id); 
+	}
+	
+	public List<Integer> deleteMultipleUsers(List<Integer> ids){
+		return UserDAO.getInstance().deleteMultipleUsers(ids);
 	}
 }

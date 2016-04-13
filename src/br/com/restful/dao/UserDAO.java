@@ -1,9 +1,11 @@
 package br.com.restful.dao;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.core.Response;
 
@@ -155,6 +157,29 @@ public class UserDAO extends ConnectionFactory{
 			fecharConexao(conexao, pstmt, rs);
 		}
 		return id;
+	}
+	
+	public List<Integer> deleteMultipleUsers(List<Integer> ids) {
+		
+		Connection conexao = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		conexao = criarConexao();
+		
+		try {
+			pstmt = conexao.prepareStatement(
+					"DELETE FROM users WHERE id in (?);"
+					);
+			pstmt.setArray(1, (Array) ids);
+			pstmt.execute();
+			
+		} catch (Exception e) {
+			System.out.println("Erro ao apagar os usuarios: " + e);
+			e.printStackTrace();
+		} finally {
+			fecharConexao(conexao, pstmt, rs);
+		}
+		return ids;
 	}
 	
 	public User selectOne(int id){
