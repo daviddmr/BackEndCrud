@@ -1,6 +1,5 @@
 package br.com.restful.dao;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,12 +8,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.ws.rs.core.Response;
 
 import br.com.restful.factory.ConnectionFactory;
 import br.com.restful.model.User;
-import br.com.restful.model.Users;;
 
 public class UserDAO extends ConnectionFactory{
 

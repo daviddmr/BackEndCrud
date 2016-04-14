@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.google.gson.annotations.SerializedName;
-
 @XmlRootElement
 @Entity
 @Table(name = "user")

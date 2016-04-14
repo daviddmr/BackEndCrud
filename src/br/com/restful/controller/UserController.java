@@ -2,9 +2,6 @@ package br.com.restful.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Array;
-
-import javax.ws.rs.core.Response;
 
 import br.com.restful.dao.UserDAO;
 import br.com.restful.model.User;
