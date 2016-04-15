@@ -114,17 +114,11 @@ public class UserResource {
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response deleteUserMultipleUsers(String usersJson){
-		
+		String deleteMultipleResponse = null;
 		if(usersJson != null){
-			System.out.println("teste = " + usersJson);
 			try{
 				Users users = new Gson().fromJson(usersJson, Users.class);
-				List<Integer> userToDelete = new ArrayList<Integer>(); 
-				for(User u: users.getListUsers()){
-					System.out.println("Id = "+u.getId());
-					userToDelete.add((int) u.getId());
-				}
-				new UserController().deleteMultipleUsers(userToDelete);
+				deleteMultipleResponse = new Gson().toJson(new UserController().deleteMultipleUsers(users));
 			}catch(Exception e){
 				System.out.println("Erro: "+e);
 			}
@@ -133,8 +127,7 @@ public class UserResource {
 		}
 
 		return Response.status(200)
-//				.entity("{\"status\": 200, \"message\":\""+userResponse.getFirstName()+ " apagado com sucesso\"}")
-				.entity("{\"status\": 200, \"message\":\""+" apagado com sucesso\"}")
+				.entity(deleteMultipleResponse)
 				.build();
 	}
 }

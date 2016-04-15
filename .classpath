@@ -11,17 +11,31 @@
 	<classpathentry exported="true" kind="lib" path="WebContent/WEB-INF/lib/postgresql-9.2-1002.jdbc4.jar"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate"/>
-	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/asm-3.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/ejb3-persistence.jar"/>
-	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/gson-2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/gson-2.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/gson-2.1-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/hibernate-entitymanager.jar"/>
-	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/jersey-core-1.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/jersey-json-1.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/jersey-server-1.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/jersey-servlet-1.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/jsr311-api-1.1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/postgresql-9.2-1002.jdbc4.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/asm-3.1.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/c3p0-0.9.1.2.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/cglib-nodep-2.1_3.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/commons-collections-2.1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/gson-2.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/gson-2.1-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/gson-2.1.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/hibernate-commons-annotations.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/hibernate-entitymanager.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/hibernate-validator.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/hibernate3.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/javassist.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/jboss-archive-browsing.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/jersey-core-1.11.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/jersey-json-1.11.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/jersey-server-1.11.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/jersey-servlet-1.11.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/jsr311-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/jta.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/log4j-1.2.11.jar"/>
+	<classpathentry kind="lib" path="/Users/David/MyProjects/backendcrud/exported libraries/postgresql-9.2-1002.jdbc4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

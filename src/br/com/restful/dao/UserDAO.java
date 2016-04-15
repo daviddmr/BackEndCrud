@@ -13,6 +13,7 @@ import javax.persistence.Query;
 
 import br.com.restful.factory.ConnectionFactory;
 import br.com.restful.model.User;
+import br.com.restful.model.Users;
 
 public class UserDAO extends ConnectionFactory{
 
@@ -72,7 +73,7 @@ public class UserDAO extends ConnectionFactory{
 			em.merge(user);
 			em.getTransaction().commit();
 		} catch (Exception e) {
-			System.out.println("Erro ao adicionar o usuário: "+e);
+			System.out.println("Erro ao adicionar o usuï¿½rio: "+e);
 		} finally {
 			emf.close();
 		}
@@ -124,7 +125,7 @@ public class UserDAO extends ConnectionFactory{
 			em.merge(user);
 			em.getTransaction().commit();
 		}catch(Exception e){
-			System.out.println("Erro ao alterar o usuário: "+e);
+			System.out.println("Erro ao alterar o usuï¿½rio: "+e);
 		}finally {
 			emf.close();
 		}
@@ -157,7 +158,7 @@ public class UserDAO extends ConnectionFactory{
 	public User deleteUserJPA(User user) {
 		try{	
 			em.getTransaction().begin();
-			em.remove(selectById(user.getId()));
+			em.remove(selectOneJPA(user.getId()));
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			System.out.println("Erro ao apagar o usuario: " + e);
@@ -166,10 +167,6 @@ public class UserDAO extends ConnectionFactory{
 			emf.close();
 		}
 		return user;
-	}
-	
-	public User selectById(long id){
-		return em.find(User.class, id);
 	}
 	
 	public User selectOne(int id){
@@ -215,11 +212,11 @@ public class UserDAO extends ConnectionFactory{
 		return em.find(User.class, id);
 	}
 
-	public ArrayList<User> selectAll(){
+	public List<User> selectAll(){
 		Connection conexao = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ArrayList<User> users = null;
+		List<User> users = null;
 		
 		conexao = criarConexao();
 		users = new ArrayList<User>();
@@ -257,19 +254,28 @@ public class UserDAO extends ConnectionFactory{
 	}
 	
 	public List<User> selectAllJPA(){
-		em.getTransaction().begin();
-		Query query = em.createQuery("SELECT u FROM User u");
-		List<User> users = query.getResultList();
-		em.getTransaction().commit();
-		emf.close();
+		List<User> users = new ArrayList<User>();
+		try{
+			em.getTransaction().begin();
+			Query query = em.createQuery("SELECT u FROM User u");
+			users = query.getResultList();
+			em.getTransaction().commit();
+		}catch(Exception e){
+			System.out.println("Erro ao listar os usuarios: " + e);
+		}finally{
+			emf.close();
+		}
 		return users;
 	}
 	
-	public void deleteMultipleUsersJPA(){
-		
+	public Users deleteMultipleUsersJPA(Users users){
+		for(User u: users.getListUsers()){
+			deleteUserJPA(u);
+		}
+		return users;
 	}
 
-public List<Integer> deleteMultipleUsers(List<Integer> usersList) {
+	public List<Integer> deleteMultipleUsers(List<Integer> usersList) {
 		
 		Connection conexao = null;
 		PreparedStatement pstmt = null;

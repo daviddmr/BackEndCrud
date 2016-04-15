@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.restful.dao.UserDAO;
 import br.com.restful.model.User;
+import br.com.restful.model.Users;
 
 public class UserController {
 
@@ -32,11 +33,12 @@ public class UserController {
 	}
 	
 	public User deleteUser(User user){
+		System.out.println("Delete user");
 //		return UserDAO.getInstance().deleteUser(user);
 		return UserDAO.getInstance().deleteUserJPA(user);
 	}
 	
-	public List<Integer> deleteMultipleUsers(List<Integer> userToDelete){
-		return UserDAO.getInstance().deleteMultipleUsers(userToDelete);
+	public Users deleteMultipleUsers(Users users){
+		return UserDAO.getInstance().deleteMultipleUsersJPA(users);
 	}
 }
