@@ -8,41 +8,54 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
 @Entity
-@Table(name = "user")
+@Table(name="users")
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	@Column
+	@GeneratedValue
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	
+	@Column(name="first_name")
 	private String firstName;
-	@Column
+	
+	@Column(name="last_name")
 	private String lastName;
+	
 	@Column
 	private String birthday;
+	
 	@Column
 	private String address;
-	@Column
+	
+	@Column(name="address_complement")
 	private String addressComplement;
+	
 	@Column
 	private String district;
+	
 	@Column
 	private String telephone;
-	@Column
+	
+	@Column(name="mobile_phone")
 	private String mobilePhone;
+	
 	@Column
 	private String rg;
+	
 	@Column
 	private String cpf;
+	
 	@Column
 	private String state;
+	
 	@Column
 	private String city;
+	
 	@Column
 	private String postcode;
 	
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
 	public void setId(Integer id) {
@@ -144,7 +157,7 @@ public class User {
 		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
 		result = prime * result + ((district == null) ? 0 : district.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((mobilePhone == null) ? 0 : mobilePhone.hashCode());
 		result = prime * result + ((postcode == null) ? 0 : postcode.hashCode());
@@ -153,7 +166,6 @@ public class User {
 		result = prime * result + ((telephone == null) ? 0 : telephone.hashCode());
 		return result;
 	}
-	
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -199,10 +211,7 @@ public class User {
 				return false;
 		} else if (!firstName.equals(other.firstName))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
@@ -236,6 +245,10 @@ public class User {
 			return false;
 		return true;
 	}
+	
+	
+	
+	
 	
 	
 }

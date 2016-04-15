@@ -23,16 +23,22 @@ public class UserResource {
 	@GET
 	@Path("/listarTodos")
 	@Produces("application/json")
-	public ArrayList<User> selectAll(){
-		return new UserController().selectAll();
+	public Response selectAll(){
+		String selectAllResponse = new Gson().toJson(new UserController().selectAll());
+		return Response.status(200)
+				.entity(selectAllResponse)
+				.build();
 	}
 	
 	@GET
 	@Path("/listarUm")
 	@Produces("application/json")
-	public User getUsers(
+	public Response getUsers(
 		@QueryParam("id") int id) {
-		return new UserController().selectOne(id);
+		String selectOneResponse = new Gson().toJson(new UserController().selectOne(id));
+		return Response.status(200)
+				.entity(selectOneResponse)
+				.build();
 	}
 	
 	@POST
@@ -41,11 +47,11 @@ public class UserResource {
 	@Consumes("application/json")
 	public Response addUser(String userJson) {
 		User user = null;
-		User userResponse = null;
+		String insertResponse = null;
 		if(userJson != null){
 			try{
 				user = new Gson().fromJson(userJson, User.class);
-				userResponse = new UserController().addUser(user);
+				insertResponse = new Gson().toJson(new UserController().addUser(user));
 			}catch(Exception e){
 				System.out.println("Erro: "+e);
 			}
@@ -53,7 +59,7 @@ public class UserResource {
 			System.out.println("Json parameter is empty");
 		}
 		return Response.status(200)
-			.entity("{\"status\": 200, \"message\":\""+userResponse.getFirstName()+ " adicionado com sucesso\"}")
+			.entity(insertResponse)
 			.build();
 	}
 	
@@ -64,11 +70,11 @@ public class UserResource {
 	public Response updateUser(String userJson) {
 		
 		User user = null;
-		User userResponse = null;
+		String updateResponse = null;
 		if(userJson != null){
 			try{
 				user = new Gson().fromJson(userJson, User.class);
-				userResponse = new UserController().updateUser(user);
+				updateResponse = new Gson().toJson(new UserController().updateUser(user));
 			}catch(Exception e){
 				System.out.println("Erro: "+e);
 			}
@@ -76,7 +82,7 @@ public class UserResource {
 			System.out.println("Json parameter is empty");
 		}
 		return Response.status(200)
-			.entity("{\"status\": 200, \"message\":\""+userResponse.getFirstName()+ " alterado com sucesso\"}")
+			.entity(updateResponse)
 			.build();
 	}
 	
@@ -86,11 +92,11 @@ public class UserResource {
 	@Consumes("application/json")
 	public Response deleteUser(String userJson){
 		User user = null;
-		User userResponse = null;
+		String deleteResponse = null;
 		if(userJson != null){
 			try{
 				user = new Gson().fromJson(userJson, User.class);
-				userResponse = new UserController().deleteUser(user);
+				deleteResponse = new Gson().toJson(new UserController().deleteUser(user));
 			}catch(Exception e){
 				System.out.println("Erro: "+e);
 			}
@@ -99,7 +105,7 @@ public class UserResource {
 		}
 		
 		return Response.status(200)
-				.entity("{\"status\": 200, \"message\":\""+userResponse.getFirstName()+ " apagado com sucesso\"}")
+				.entity(deleteResponse)
 				.build();
 	}
 	
@@ -116,7 +122,7 @@ public class UserResource {
 				List<Integer> userToDelete = new ArrayList<Integer>(); 
 				for(User u: users.getListUsers()){
 					System.out.println("Id = "+u.getId());
-					userToDelete.add(u.getId());
+					userToDelete.add((int) u.getId());
 				}
 				new UserController().deleteMultipleUsers(userToDelete);
 			}catch(Exception e){

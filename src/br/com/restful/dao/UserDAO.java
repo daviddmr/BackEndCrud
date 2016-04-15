@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import br.com.restful.factory.ConnectionFactory;
 import br.com.restful.model.User;
@@ -21,83 +23,13 @@ public class UserDAO extends ConnectionFactory{
 	
 	public static UserDAO getInstance(){
 		if(instance == null)
-//			emf = Persistence.createEntityManagerFactory("maindatabase");
-//			em = emf.createEntityManager();
+			emf = Persistence.createEntityManagerFactory("maindatabase");
+			em = emf.createEntityManager();
 			instance = new UserDAO();
 		return instance;
 	}
 	
-	public User insert(String firstName, String lastName, String birthDay, String address,
-			String addressComplement, String district, String telephone, String mobilePhone, String rg, String cpf,
-			String state, String city, String postcode) {
-		
-		Connection conexao = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;		
-		conexao = criarConexao();
-		User user = new User();
-
-		try {
-			pstmt = conexao.prepareStatement(
-					"insert into users(first_name, last_name, birthday,  address, address_complement, district, "
-					+ "telephone, mobile_phone, rg, cpf, state, city, postcode) values(?, ?, ?, ?, ?, ?, ?, ?, "
-					+ "?, ?, ?, ?, ?);"
-					);
-			
-			user.setId(1);
-			user.setFirstName(firstName);
-			user.setLastName(lastName);
-			user.setBirthday(birthDay);
-			user.setAddress(address);
-			user.setAddressComplement(addressComplement);
-			user.setDistrict(district);
-			user.setTelephone(telephone);
-			user.setMobilePhone(mobilePhone);
-			user.setRg(rg);
-			user.setCpf(cpf);
-			user.setState(state);
-			user.setCity(city);
-			user.setPostcode(postcode);
-			
-			pstmt.setString(1,firstName);
-			pstmt.setString(2,lastName);
-			pstmt.setString(3,birthDay);
-			pstmt.setString(4,address);
-			pstmt.setString(5,addressComplement);
-			pstmt.setString(6,district);
-			pstmt.setString(7,telephone);
-			pstmt.setString(8,mobilePhone);
-			pstmt.setString(9,rg);
-			pstmt.setString(10,cpf);
-			pstmt.setString(11,state);
-			pstmt.setString(12,city);
-			pstmt.setString(13,postcode);
-			pstmt.execute();
-			
-		} catch (Exception e) {
-			System.out.println("Erro ao adicionar o usuario: " + e);
-			e.printStackTrace();
-		} finally {
-			fecharConexao(conexao, pstmt, rs);
-		}
-		return user;
-	}
-	
 	public User insert(User user) {
-//		try{
-//			emf = Persistence.createEntityManagerFactory("maindatabase");
-//			em = emf.createEntityManager();
-//			em.getTransaction().begin();
-//			em.merge(user);
-//			em.getTransaction().commit();
-//		}catch (Exception e) {
-//			System.out.println("Erro ao adicionar o usuario: " + e);
-//			e.printStackTrace();
-//		}	finally {
-//			emf.close();
-//		}
-//		return user;
-		
 		Connection conexao = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;		
@@ -130,6 +62,19 @@ public class UserDAO extends ConnectionFactory{
 			e.printStackTrace();
 		} finally {
 			fecharConexao(conexao, pstmt, rs);
+		}
+		return user;
+	}
+	
+	public User insertJPA(User user) {
+		try {
+			em.getTransaction().begin();
+			em.merge(user);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println("Erro ao adicionar o usuário: "+e);
+		} finally {
+			emf.close();
 		}
 		return user;
 	}
@@ -161,7 +106,7 @@ public class UserDAO extends ConnectionFactory{
 			pstmt.setString(11,user.getState());
 			pstmt.setString(12,user.getCity());
 			pstmt.setString(13,user.getPostcode());
-			pstmt.setInt(14,user.getId());
+			pstmt.setLong(14,user.getId());
             pstmt.execute();
 			
 		} catch (Exception e) {
@@ -171,6 +116,19 @@ public class UserDAO extends ConnectionFactory{
 			fecharConexao(conexao, pstmt, rs);
 		}
 		return user;	
+	}
+	
+	public User updateUserJPA(User user){
+		try{
+			em.getTransaction().begin();
+			em.merge(user);
+			em.getTransaction().commit();
+		}catch(Exception e){
+			System.out.println("Erro ao alterar o usuário: "+e);
+		}finally {
+			emf.close();
+		}
+		return user;
 	}
 	
 	public User deleteUser(User user) {
@@ -184,7 +142,7 @@ public class UserDAO extends ConnectionFactory{
 			pstmt = conexao.prepareStatement(
 					"DELETE FROM users WHERE id=?;"
 					);
-			pstmt.setInt(1,user.getId());
+			pstmt.setLong(1,user.getId());
 			pstmt.execute();
 			
 		} catch (Exception e) {
@@ -196,30 +154,22 @@ public class UserDAO extends ConnectionFactory{
 		return user;
 	}
 	
-	public List<Integer> deleteMultipleUsers(List<Integer> usersList) {
-		
-		Connection conexao = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		conexao = criarConexao();
-		
-		try{
-			final Integer[] data = usersList.toArray(new Integer[usersList.size()]);
-			final java.sql.Array sqlArray = conexao.createArrayOf("int4", data);
-			
-			pstmt = conexao.prepareStatement(
-					"DELETE FROM users WHERE id in ?;"
-					);
-			
-			pstmt.setArray(1, sqlArray);
-			pstmt.execute();
-
-		}catch(Exception e){
-			System.out.println("Erro ao apagar os usuarios: "+e);
+	public User deleteUserJPA(User user) {
+		try{	
+			em.getTransaction().begin();
+			em.remove(selectById(user.getId()));
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println("Erro ao apagar o usuario: " + e);
+			e.printStackTrace();
 		} finally {
-			fecharConexao(conexao, pstmt, rs);
+			emf.close();
 		}
-		return usersList;
+		return user;
+	}
+	
+	public User selectById(long id){
+		return em.find(User.class, id);
 	}
 	
 	public User selectOne(int id){
@@ -259,6 +209,10 @@ public class UserDAO extends ConnectionFactory{
 			fecharConexao(conexao, pstmt, rs);
 		}
 		return user;
+	}
+	
+	public User selectOneJPA(long id){
+		return em.find(User.class, id);
 	}
 
 	public ArrayList<User> selectAll(){
@@ -302,9 +256,42 @@ public class UserDAO extends ConnectionFactory{
 		return users;
 	}
 	
-	public void deleteMultipleUsers(){
+	public List<User> selectAllJPA(){
+		em.getTransaction().begin();
+		Query query = em.createQuery("SELECT u FROM User u");
+		List<User> users = query.getResultList();
+		em.getTransaction().commit();
+		emf.close();
+		return users;
+	}
+	
+	public void deleteMultipleUsersJPA(){
 		
 	}
 
-	
+public List<Integer> deleteMultipleUsers(List<Integer> usersList) {
+		
+		Connection conexao = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		conexao = criarConexao();
+		
+		try{
+			final Integer[] data = usersList.toArray(new Integer[usersList.size()]);
+			final java.sql.Array sqlArray = conexao.createArrayOf("int4", data);
+			
+			pstmt = conexao.prepareStatement(
+					"DELETE FROM users WHERE id in ?;"
+					);
+			
+			pstmt.setArray(1, sqlArray);
+			pstmt.execute();
+
+		}catch(Exception e){
+			System.out.println("Erro ao apagar os usuarios: "+e);
+		} finally {
+			fecharConexao(conexao, pstmt, rs);
+		}
+		return usersList;
+	}
 }

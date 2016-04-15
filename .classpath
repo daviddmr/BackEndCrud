@@ -11,5 +11,17 @@
 	<classpathentry exported="true" kind="lib" path="WebContent/WEB-INF/lib/postgresql-9.2-1002.jdbc4.jar"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate"/>
+	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/asm-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/gson-2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/gson-2.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/gson-2.1-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/hibernate-entitymanager.jar"/>
+	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/jersey-core-1.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/jersey-json-1.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/jersey-server-1.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/jersey-servlet-1.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/jsr311-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/David/Downloads/restful-master/restful-master/Restful/WebContent/WEB-INF/lib/postgresql-9.2-1002.jdbc4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

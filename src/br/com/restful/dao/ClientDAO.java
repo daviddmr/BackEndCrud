@@ -8,6 +8,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import br.com.restful.model.Client;
+import br.com.restful.model.User;
 
 public class ClientDAO {
 
@@ -22,6 +23,13 @@ public class ClientDAO {
 	public void salvar(Client client){
 		em.getTransaction().begin();
 		em.merge(client);
+		em.getTransaction().commit();
+		emf.close();
+	}
+	
+	public void salvarUser(User user){
+		em.getTransaction().begin();
+		em.merge(user);
 		em.getTransaction().commit();
 		emf.close();
 	}
