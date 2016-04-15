@@ -70,7 +70,7 @@ public class UserDAO extends ConnectionFactory{
 	public User insertJPA(User user) {
 		try {
 			em.getTransaction().begin();
-			em.merge(user);
+			em.persist(user);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			System.out.println("Erro ao adicionar o usu�rio: "+e);

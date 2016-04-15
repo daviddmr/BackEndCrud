@@ -39,6 +39,7 @@ public class UserController {
 	}
 	
 	public Users deleteMultipleUsers(Users users){
+//		return UserDAO.getInstance().deleteMultipleUsers(users);
 		return UserDAO.getInstance().deleteMultipleUsersJPA(users);
 	}
 }

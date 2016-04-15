@@ -22,7 +22,7 @@ public Connection criarConexao(){
 			conexao = DriverManager.getConnection(URL, USUARIO, SENHA);
 			
 		} catch (Exception e) {
-			System.out.println("Erro ao criar conexão com o banco: " + URL);
+			System.out.println("Erro ao criar conexao com o banco: " + URL);
 			e.printStackTrace();
 		}
 		return conexao;
@@ -44,7 +44,7 @@ public Connection criarConexao(){
 			}
 					
 		} catch (Exception e) {
-			System.out.println("Erro ao fechar conexão com o banco: " + URL);
+			System.out.println("Erro ao fechar conexao com o banco: " + URL);
 		}
 	}
 }
